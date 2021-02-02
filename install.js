@@ -142,14 +142,9 @@ const releaseName = (
 )
 const arch = process.env.npm_config_arch || os.arch()
 const platform = process.env.npm_config_platform || os.platform()
-const baseOverride = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || '';
-if (baseOverride.length > 0) {
-  console.log(`[ffmpeg-ffprobe-static] Using custom base url: ${baseOverride}`);
-}
-const baseUrl = new URL(
-  release,
-  baseOverride || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/'
-).href;
+const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/';
+console.log(`[ffmpeg-ffprobe-static] Using base url: ${base}`);
+const baseUrl = new URL(release, base).href;
 const ffmpegUrl = `${baseUrl}/ffmpeg-${platform}-${arch}`
 const ffprobeUrl = `${baseUrl}/ffprobe-${platform}-${arch}`
 const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
