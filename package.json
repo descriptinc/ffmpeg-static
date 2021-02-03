@@ -1,10 +1,12 @@
 {
-  "name": "ffmpeg-static",
-  "version": "4.2.7",
+  "name": "ffmpeg-ffprobe-static",
+  "version": "4.3.1-rc.6",
   "description": "ffmpeg static binaries for Mac OSX and Linux and Windows",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "index.js",
+    "index.d.ts",
     "install.js",
     "example.js"
   ],
@@ -12,15 +14,16 @@
     "install": "node install.js",
     "test": "node test.js",
     "lint": "eslint .",
-    "prepublishOnly": "npm run lint && npm test"
+    "prepublishOnly": "npm run lint && npm test",
+    "postinstall": "patch-package"
   },
   "ffmpeg-static": {
-    "binary-release-tag": "b4.3.1",
+    "binary-release-tag": "b4.3.1-rc.5",
     "binary-release-name": "4.3.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/eugeneware/ffmpeg-static"
+    "url": "https://github.com/descriptinc/ffmpeg-ffprobe-static"
   },
   "keywords": [
     "ffmpeg",
@@ -41,7 +44,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/eugeneware/ffmpeg-static/issues"
+    "url": "https://github.com/descriptinc/ffmpeg-ffprobe-static/issues"
   },
   "engines": {
     "node": ">=10"
@@ -50,6 +53,7 @@
     "@derhuerst/http-basic": "^8.2.0",
     "env-paths": "^2.2.0",
     "https-proxy-agent": "^5.0.0",
+    "patch-package": "^6.2.2",
     "progress": "^2.0.3"
   },
   "devDependencies": {

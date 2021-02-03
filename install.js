@@ -8,25 +8,24 @@ const envPaths = require('env-paths')
 const FileCache = require('@derhuerst/http-basic/lib/FileCache').default
 var ProgressBar = require("progress");
 var request = require('@derhuerst/http-basic')
-var ffmpegPath = require(".");
+var {ffmpegPath, ffprobePath} = require(".");
 var pkg = require("./package");
 
 const exitOnError = (err) => {
   console.error(err)
   process.exit(1)
 }
-const exitOnErrorOrWarnWith = (msg) => (err) => {
-  if (err.statusCode === 404) console.warn(msg)
-  else exitOnError(err)
+const warnWith = (msg) => (err) => {
+  console.warn(msg)
 }
 
-if (!ffmpegPath) {
-  exitOnError('ffmpeg-static install failed: No binary found for architecture')
+if (!ffmpegPath || !ffprobePath) {
+  exitOnError('ffmpeg-ffprobe-static install failed: No binary found for architecture')
 }
 
 try {
-  if (fs.statSync(ffmpegPath).isFile()) {
-    console.info('ffmpeg is installed already.')
+  if (fs.statSync(ffmpegPath).isFile() && fs.statSync(ffprobePath).isFile()) {
+    console.info('ffmpeg/ffprobe is installed already.')
     process.exit(0)
   }
 } catch (err) {
@@ -142,18 +141,28 @@ const releaseName = (
 )
 const arch = process.env.npm_config_arch || os.arch()
 const platform = process.env.npm_config_platform || os.platform()
-const downloadUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/${release}/${platform}-${arch}`
-const readmeUrl = `${downloadUrl}.README`
-const licenseUrl = `${downloadUrl}.LICENSE`
+const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/';
+console.log(`[ffmpeg-ffprobe-static] Using base url: ${base}`);
+const baseUrl = new URL(release, base).href;
+const ffmpegUrl = `${baseUrl}/ffmpeg-${platform}-${arch}`
+const ffprobeUrl = `${baseUrl}/ffprobe-${platform}-${arch}`
+const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
+const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 
-downloadFile(downloadUrl, ffmpegPath, onProgress)
-.then(() => {
-  fs.chmodSync(ffmpegPath, 0o755) // make executable
-})
-.catch(exitOnError)
+downloadFile(ffmpegUrl, ffmpegPath, onProgress)
+  .then(() => {
+    fs.chmodSync(ffmpegPath, 0o755) // make executable
+  })
+  .catch(exitOnError)
 
-.then(() => downloadFile(readmeUrl, `${ffmpegPath}.README`))
-.catch(exitOnErrorOrWarnWith('Failed to download the ffmpeg README.'))
+  .then(() => downloadFile(ffprobeUrl, ffprobePath, onProgress))
+  .then(() => {
+    fs.chmodSync(ffprobePath, 0o755) // make executable
+  })
+  .catch(exitOnError)
 
-.then(() => downloadFile(licenseUrl, `${ffmpegPath}.LICENSE`))
-.catch(exitOnErrorOrWarnWith('Failed to download the ffmpeg LICENSE.'))
+  .then(() => downloadFile(readmeUrl, `${ffmpegPath}.README`))
+  .catch(warnWith('Failed to download the ffmpeg README.'))
+
+  .then(() => downloadFile(licenseUrl, `${ffmpegPath}.LICENSE`))
+  .catch(warnWith('Failed to download the ffmpeg LICENSE.'))
