@@ -1,19 +1,14 @@
 #!/bin/bash
-set -x
+set -e
+cd $(dirname $0)
+
+set +e
 tar_exec=$(command -v gtar)
 if [ $? -ne 0 ]; then
 	tar_exec=$(command -v tar)
 fi
-
-tar_options="--wildcards --ignore-case"
-if [ "$(uname)" == "Darwin" ]; then
-  tar_options=""
-fi
-
 set -e
-echo using tar executable: $tar_exec $tar_options
-
-cd $(dirname $0)
+echo using tar executable at $tar_exec
 
 mkdir -p ../bin
 
@@ -40,6 +35,7 @@ mv ../bin/ffmpeg.exe ../bin/win32-ia32
 curl -s -L 'https://raw.githubusercontent.com/sudo-nautilus/FFmpeg-Builds-Win32/master/LICENSE' -o ../bin/win32-ia32.LICENSE
 
 echo 'linux x64'
+echo '  downloading from johnvansickle.com'
 download 'https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz' linux-x64.tar.xz
 echo '  extracting'
 xzcat linux-x64.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffmpeg'
@@ -48,6 +44,7 @@ xzcat linux-x64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.txt
 xzcat linux-x64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-x64.README
 
 echo 'linux ia32'
+echo '  downloading from johnvansickle.com'
 download 'https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz' linux-ia32.tar.xz
 echo '  extracting'
 xzcat linux-ia32.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffmpeg'
@@ -56,6 +53,7 @@ xzcat linux-ia32.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.tx
 xzcat linux-ia32.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-ia32.README
 
 echo 'linux arm'
+echo '  downloading from johnvansickle.com'
 download 'https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz' linux-arm.tar.xz
 echo '  extracting'
 xzcat linux-arm.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffmpeg'
@@ -64,6 +62,7 @@ xzcat linux-arm.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.txt
 xzcat linux-arm.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-arm.README
 
 echo 'linux arm64'
+echo '  downloading from johnvansickle.com'
 download 'https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz' linux-arm64.tar.xz
 echo '  extracting'
 xzcat linux-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffmpeg'
@@ -72,12 +71,8 @@ xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.t
 xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-arm64.README
 
 echo 'darwin x64'
-download 'https://evermeet.cx/ffmpeg/getrelease/ffmpeg/zip' ffmpeg-darwin-x64.zip
-echo '  extracting'
-unzip -o -d ../bin -j ffmpeg-darwin-x64.zip ffmpeg
-mv ../bin/ffmpeg ../bin/ffmpeg-darwin-x64
-
-download 'https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip' ffprobe-darwin-x64.zip
+echo '  downloading from evermeet.cx'
+download 'https://evermeet.cx/ffmpeg/getrelease/ffmpeg/zip' darwin-x64.zip
 echo '  extracting'
 unzip -o -d ../bin -j darwin-x64.zip ffmpeg
 mv ../bin/ffmpeg ../bin/darwin-x64
