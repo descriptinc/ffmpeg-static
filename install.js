@@ -18,17 +18,18 @@ const exitOnError = (err) => {
   console.error(err)
   process.exit(1)
 }
-const warnWith = (msg) => (err) => {
-  console.warn(msg)
+const exitOnErrorOrWarnWith = (msg) => (err) => {
+  if (err.statusCode === 404) console.warn(msg)
+  else exitOnError(err)
 }
 
 if (!ffmpegPath || !ffprobePath) {
-  exitOnError('ffmpeg-ffprobe-static install failed: No binary found for architecture')
+  exitOnError('ffmpeg-static install failed: No binary found for architecture')
 }
 
 try {
   if (fs.statSync(ffmpegPath).isFile() && fs.statSync(ffprobePath).isFile()) {
-    console.info('ffmpeg/ffprobe is installed already.')
+    console.info('ffmpeg is installed already.')
     process.exit(0)
   }
 } catch (err) {
@@ -169,6 +170,12 @@ const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 downloadFile(downloadUrl, ffmpegPath, onProgress)
 .then(() => {
   fs.chmodSync(ffmpegPath, 0o755) // make executable
+})
+.catch(exitOnError)
+
+.then(() => downloadFile(downloadUrl, ffprobePath, onProgress))
+.then(() => {
+  fs.chmodSync(ffprobePath, 0o755) // make executable
 })
 .catch(exitOnError)
 

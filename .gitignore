@@ -12,6 +12,8 @@ bin/*
 /ffmpeg.exe
 /ffmpeg.README
 /ffmpeg.LICENSE
+
+# Added by Descript
 /ffprobe
 /ffprobe.exe
 /ffprobe.README

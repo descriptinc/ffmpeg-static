@@ -18,8 +18,8 @@
     "postinstall": "patch-package"
   },
   "ffmpeg-static": {
-    "binary-release-tag": "b4.4.0-rc.1",
-    "binary-release-name": "4.4.0"
+    "binary-release-tag": "b4.4",
+    "binary-release-name": "4.4"
   },
   "repository": {
     "type": "git",

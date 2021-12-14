@@ -25,6 +25,7 @@ tmpdir=$(mktemp -d)
 mv "$tmpdir/ffmpeg.exe" ../bin/win32-x64
 mv "$tmpdir/LICENSE" ../bin/win32-x64.LICENSE
 mv "$tmpdir/README.txt" ../bin/win32-x64.README
+mv "$tmpdir/ffprobe.exe" ../bin/win32-x64
 
 echo 'windows ia32'
 echo '  downloading from github.com'
@@ -33,6 +34,8 @@ echo '  extracting'
 unzip -o -d ../bin -j win32-ia32.zip '*/bin/ffmpeg.exe'
 mv ../bin/ffmpeg.exe ../bin/win32-ia32
 curl -s -L 'https://raw.githubusercontent.com/sudo-nautilus/FFmpeg-Builds-Win32/master/LICENSE' -o ../bin/win32-ia32.LICENSE
+unzip -o -d ../bin -j win32-ia32.zip '*/bin/ffprobe.exe'
+mv ../bin/ffprobe.exe ../bin/win32-ia32
 
 echo 'linux x64'
 echo '  downloading from johnvansickle.com'
@@ -42,6 +45,8 @@ xzcat linux-x64.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards
 mv ../bin/ffmpeg ../bin/linux-x64
 xzcat linux-x64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.txt' >../bin/linux-x64.LICENSE
 xzcat linux-x64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-x64.README
+xzcat linux-x64.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffprobe'
+mv ../bin/ffprobe ../bin/linux-x64
 
 echo 'linux ia32'
 echo '  downloading from johnvansickle.com'
@@ -51,6 +56,8 @@ xzcat linux-ia32.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcard
 mv ../bin/ffmpeg ../bin/linux-ia32
 xzcat linux-ia32.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.txt' >../bin/linux-ia32.LICENSE
 xzcat linux-ia32.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-ia32.README
+xzcat linux-ia32.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffprobe'
+mv ../bin/ffprobe ../bin/linux-ia32
 
 echo 'linux arm'
 echo '  downloading from johnvansickle.com'
@@ -60,6 +67,8 @@ xzcat linux-arm.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards
 mv ../bin/ffmpeg ../bin/linux-arm
 xzcat linux-arm.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.txt' >../bin/linux-arm.LICENSE
 xzcat linux-arm.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-arm.README
+xzcat linux-arm.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffprobe'
+mv ../bin/ffprobe ../bin/linux-arm
 
 echo 'linux arm64'
 echo '  downloading from johnvansickle.com'
@@ -69,6 +78,8 @@ xzcat linux-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcar
 mv ../bin/ffmpeg ../bin/linux-arm64
 xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.txt' >../bin/linux-arm64.LICENSE
 xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-arm64.README
+xzcat linux-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 1 --wildcards '*/ffprobe'
+mv ../bin/ffprobe ../bin/linux-arm64
 
 echo 'darwin x64'
 echo '  downloading from evermeet.cx'
@@ -78,6 +89,9 @@ unzip -o -d ../bin -j darwin-x64.zip ffmpeg
 mv ../bin/ffmpeg ../bin/darwin-x64
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/LICENSE.md'  -o ../bin/darwin-x64.LICENSE
 curl -s -L 'https://evermeet.cx/ffmpeg/info/ffmpeg/release' | jq --tab '.' >../bin/darwin-x64.README
+download 'https://evermeet.cx/ffmpeg/getrelease/ffprobe/zip' darwin-x64-ffprobe.zip
+unzip -o -d ../bin -j darwin-x64-ffprobe.zip ffprobe
+mv ../bin/ffprobe ../bin/darwin-x64
 
 echo 'darwin arm64'
 echo '  downloading from osxexperts.net'
@@ -87,8 +101,13 @@ unzip -o -d ../bin -j darwin-arm64.zip ffmpeg
 mv ../bin/ffmpeg ../bin/darwin-arm64
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/LICENSE.md'  -o ../bin/darwin-arm64.LICENSE
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/README.md'  -o ../bin/darwin-arm64.README
+download 'https://www.osxexperts.net/ffmpeg44arm.zip' darwin-arm64-ffprobe.zip
+unzip -o -d ../bin -j darwin-arm64-ffprobe.zip ffprobe
+mv ../bin/ffprobe ../bin/darwin-arm64
 
 echo 'freebsd x64'
 echo '  downloading from github.com/Thefrank/ffmpeg-static-freebsd'
 download 'https://github.com/Thefrank/ffmpeg-static-freebsd/releases/download/v4.4/ffmpeg' ../bin/freebsd-x64
 chmod +x ../bin/freebsd-x64
+download 'https://github.com/Thefrank/ffmpeg-static-freebsd/releases/download/v4.4/ffprobe' ../bin/freebsd-x64-ffprobe
+chmod +x ../bin/freebsd-x64-ffprobe
