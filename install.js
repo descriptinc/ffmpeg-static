@@ -168,7 +168,7 @@ const platform = process.env.npm_config_platform || os.platform()
 // and also allow for an environment-based override
 //const baseUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/${release}`
 //const downloadUrl = `${baseUrl}/${platform}-${arch}.gz`
-const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/${release}';
+const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/';
 console.log(`[ffmpeg-ffprobe-static] Using base url: ${base}`);
 const baseUrl = new URL(release, base).href;
 const ffmpegUrl = `${baseUrl}/ffmpeg-${platform}-${arch}`

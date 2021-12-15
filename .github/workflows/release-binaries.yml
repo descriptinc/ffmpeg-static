@@ -26,7 +26,7 @@ jobs:
           cat bin/ffmpeg-linux-ia32 | gzip --best >bin/ffmpeg-linux-ia32.gz
           cat bin/ffmpeg-linux-x64 | gzip --best >bin/ffmpeg-linux-x64.gz
           cat bin/ffmpeg-win32-ia32 | gzip --best >bin/ffmpeg-win32-ia32.gz
-          cat bin/ffmpeg-win32-x64 | gzip --best >binffmpeg-/win32-x64.gz
+          cat bin/ffmpeg-win32-x64 | gzip --best >bin/ffmpeg-win32-x64.gz
           cat bin/ffprobe-darwin-x64 | gzip --best >bin/ffprobe-darwin-x64.gz
           cat bin/ffprobe-darwin-arm64 | gzip --best >bin/ffprobe-darwin-arm64.gz
           cat bin/ffprobe-freebsd-x64 | gzip --best >bin/ffprobe-freebsd-x64.gz
@@ -35,7 +35,7 @@ jobs:
           cat bin/ffprobe-linux-ia32 | gzip --best >bin/ffprobe-linux-ia32.gz
           cat bin/ffprobe-linux-x64 | gzip --best >bin/ffprobe-linux-x64.gz
           cat bin/ffprobe-win32-ia32 | gzip --best >bin/ffprobe-win32-ia32.gz
-          cat bin/ffprobe-win32-x64 | gzip --best >ffprobe-/win32-x64.gz
+          cat bin/ffprobe-win32-x64 | gzip --best >bin/ffprobe-win32-x64.gz
           ls -l bin
         shell: bash
 
