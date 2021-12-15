@@ -364,24 +364,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/ffprobe-linux-arm.README
-          asset_name: ffprobe-linux-arm.README
-          asset_content_type: text/plain
-
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/ffprobe-linux-arm.LICENSE
-          asset_name: ffprobe-linux-arm.LICENSE
-          asset_content_type: text/plain
-
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: bin/ffprobe-linux-arm64
           asset_name: ffprobe-linux-arm64
           asset_content_type: application/octet-stream
@@ -410,15 +392,6 @@ jobs:
           asset_path: bin/ffprobe-linux-ia32.gz
           asset_name: ffprobe-linux-ia32.gz
           asset_content_type: application/octet-stream
-
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/ffprobe-linux-ia32.LICENSE
-          asset_name: ffprobe-linux-ia32.LICENSE
-          asset_content_type: text/plain
 
       - uses: actions/upload-release-asset@v1.0.1
         env:
