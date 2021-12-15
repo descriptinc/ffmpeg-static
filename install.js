@@ -20,7 +20,9 @@ const exitOnError = (err) => {
 }
 const exitOnErrorOrWarnWith = (msg) => (err) => {
   if (err.statusCode === 404) console.warn(msg)
-  else exitOnError(err)
+  // [ Descript ] we don't want to exit if we can't find the README or License
+  //else exitOnError(err)
+  else console.warn(msg)
 }
 
 if (!ffmpegPath || !ffprobePath) {
@@ -162,18 +164,27 @@ const releaseName = (
 const arch = process.env.npm_config_arch || os.arch()
 const platform = process.env.npm_config_platform || os.platform()
 
-const baseUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/${release}`
-const downloadUrl = `${baseUrl}/${platform}-${arch}.gz`
+// [ Descript ] the above is commented out to allow for both ffmpeg and ffprobe
+// and also allow for an environment-based override
+//const baseUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/${release}`
+//const downloadUrl = `${baseUrl}/${platform}-${arch}.gz`
+const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/${release}';
+console.log(`[ffmpeg-ffprobe-static] Using base url: ${base}`);
+const baseUrl = new URL(release, base).href;
+const ffmpegUrl = `${baseUrl}/ffmpeg-${platform}-${arch}`
+const ffprobeUrl = `${baseUrl}/ffprobe-${platform}-${arch}`
+
 const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
 const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 
-downloadFile(downloadUrl, ffmpegPath, onProgress)
+downloadFile(ffmpegUrl, ffmpegPath, onProgress)
 .then(() => {
   fs.chmodSync(ffmpegPath, 0o755) // make executable
 })
 .catch(exitOnError)
 
-.then(() => downloadFile(downloadUrl, ffprobePath, onProgress))
+// [ Descript ] also download `ffprobe`
+.then(() => downloadFile(ffprobeUrl, ffprobePath, onProgress))
 .then(() => {
   fs.chmodSync(ffprobePath, 0o755) // make executable
 })
