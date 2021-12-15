@@ -107,9 +107,10 @@ unzip -o -d ../bin -j darwin-arm64.zip ffmpeg
 mv ../bin/ffmpeg ../bin/darwin-arm64
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/LICENSE.md'  -o ../bin/darwin-arm64.LICENSE
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/README.md'  -o ../bin/darwin-arm64.README
-download 'https://www.osxexperts.net/ffmpeg44arm.zip' darwin-arm64-ffprobe.zip
-unzip -o -d ../bin -j darwin-arm64-ffprobe.zip ffprobe
-mv ../bin/ffprobe ../bin/darwin-arm64
+# ffprobe doesn't exist at osxexperts.net
+#download 'https://www.osxexperts.net/ffmpeg44arm.zip' darwin-arm64-ffprobe.zip
+#unzip -o -d ../bin -j darwin-arm64-ffprobe.zip ffprobe
+#mv ../bin/ffprobe ../bin/darwin-arm64
 
 echo 'freebsd x64'
 echo '  downloading from github.com/Thefrank/ffmpeg-static-freebsd'
