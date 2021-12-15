@@ -28,7 +28,8 @@ jobs:
           cat bin/ffmpeg-win32-ia32 | gzip --best >bin/ffmpeg-win32-ia32.gz
           cat bin/ffmpeg-win32-x64 | gzip --best >bin/ffmpeg-win32-x64.gz
           cat bin/ffprobe-darwin-x64 | gzip --best >bin/ffprobe-darwin-x64.gz
-          cat bin/ffprobe-darwin-arm64 | gzip --best >bin/ffprobe-darwin-arm64.gz
+#         [ NOTE ] ffprobe on arm64 isn't downloaded from our current mirror
+#          cat bin/ffprobe-darwin-arm64 | gzip --best >bin/ffprobe-darwin-arm64.gz
           cat bin/ffprobe-freebsd-x64 | gzip --best >bin/ffprobe-freebsd-x64.gz
           cat bin/ffprobe-linux-arm | gzip --best >bin/ffprobe-linux-arm.gz
           cat bin/ffprobe-linux-arm64 | gzip --best >bin/ffprobe-linux-arm64.gz
@@ -326,22 +327,23 @@ jobs:
           asset_name: ffprobe-darwin-x64.gz
           asset_content_type: application/octet-stream
 
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/ffprobe-darwin-arm64
-          asset_name: ffprobe-darwin-arm64
-          asset_content_type: application/octet-stream
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/ffprobe-darwin-arm64.gz
-          asset_name: ffprobe-darwin-arm64.gz
-          asset_content_type: application/octet-stream
+# [ NOTE ] ffprobe on arm64 isn't downloaded from our current mirror
+#      - uses: actions/upload-release-asset@v1.0.1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: bin/ffprobe-darwin-arm64
+#          asset_name: ffprobe-darwin-arm64
+#          asset_content_type: application/octet-stream
+#      - uses: actions/upload-release-asset@v1.0.1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: bin/ffprobe-darwin-arm64.gz
+#          asset_name: ffprobe-darwin-arm64.gz
+#          asset_content_type: application/octet-stream
 
       - uses: actions/upload-release-asset@v1.0.1
         env:
