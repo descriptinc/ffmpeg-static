@@ -6,8 +6,11 @@ const {encode: encodeQuery} = require('querystring')
 const {strictEqual} = require('assert')
 const envPaths = require('env-paths')
 const FileCache = require('@derhuerst/http-basic/lib/FileCache').default
+const {extname} = require('path')
 var ProgressBar = require("progress");
 var request = require('@derhuerst/http-basic')
+const {createGunzip} = require('zlib')
+const {pipeline} = require('stream')
 var {ffmpegPath, ffprobePath} = require(".");
 var pkg = require("./package");
 
@@ -15,17 +18,20 @@ const exitOnError = (err) => {
   console.error(err)
   process.exit(1)
 }
-const warnWith = (msg) => (err) => {
-  console.warn(msg)
+const exitOnErrorOrWarnWith = (msg) => (err) => {
+  if (err.statusCode === 404) console.warn(msg)
+  // [ Descript ] we don't want to exit if we can't find the README or License
+  //else exitOnError(err)
+  else console.warn(msg)
 }
 
 if (!ffmpegPath || !ffprobePath) {
-  exitOnError('ffmpeg-ffprobe-static install failed: No binary found for architecture')
+  exitOnError('ffmpeg-static install failed: No binary found for architecture')
 }
 
 try {
   if (fs.statSync(ffmpegPath).isFile() && fs.statSync(ffprobePath).isFile()) {
-    console.info('ffmpeg/ffprobe is installed already.')
+    console.info('ffmpeg is installed already.')
     process.exit(0)
   }
 } catch (err) {
@@ -70,6 +76,12 @@ cache.getCacheKey = (url) => {
   return FileCache.prototype.getCacheKey(normalizeS3Url(url))
 }
 
+const isGzUrl = (url) => {
+  const path = new URL(url).pathname.split('/')
+  const filename = path[path.length - 1]
+  return filename && extname(filename) === '.gz'
+}
+
 const noop = () => {}
 function downloadFile(url, destinationPath, progressCallback = noop) {
   let fulfill, reject;
@@ -100,9 +112,19 @@ function downloadFile(url, destinationPath, progressCallback = noop) {
     }
 
     const file = fs.createWriteStream(destinationPath);
-    file.on("finish", () => fulfill());
-    file.on("error", error => reject(error));
-    response.body.pipe(file)
+    const streams = isGzUrl(url)
+      ? [response.body, createGunzip(), file]
+      : [response.body, file]
+    pipeline(
+      ...streams,
+      (err) => {
+        if (err) {
+          err.url = response.url
+          err.statusCode = response.statusCode
+          reject(err)
+        } else fulfill()
+      }
+    )
 
     if (!response.fromCache && progressCallback) {
       const cLength = response.headers["content-length"]
@@ -141,28 +163,35 @@ const releaseName = (
 )
 const arch = process.env.npm_config_arch || os.arch()
 const platform = process.env.npm_config_platform || os.platform()
+
+// [ Descript ] the above is commented out to allow for both ffmpeg and ffprobe
+// and also allow for an environment-based override
+//const baseUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/${release}`
+//const downloadUrl = `${baseUrl}/${platform}-${arch}.gz`
 const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/';
 console.log(`[ffmpeg-ffprobe-static] Using base url: ${base}`);
 const baseUrl = new URL(release, base).href;
 const ffmpegUrl = `${baseUrl}/ffmpeg-${platform}-${arch}`
 const ffprobeUrl = `${baseUrl}/ffprobe-${platform}-${arch}`
+
 const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
 const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 
 downloadFile(ffmpegUrl, ffmpegPath, onProgress)
-  .then(() => {
-    fs.chmodSync(ffmpegPath, 0o755) // make executable
-  })
-  .catch(exitOnError)
+.then(() => {
+  fs.chmodSync(ffmpegPath, 0o755) // make executable
+})
+.catch(exitOnError)
 
-  .then(() => downloadFile(ffprobeUrl, ffprobePath, onProgress))
-  .then(() => {
-    fs.chmodSync(ffprobePath, 0o755) // make executable
-  })
-  .catch(exitOnError)
+// [ Descript ] also download `ffprobe`
+.then(() => downloadFile(ffprobeUrl, ffprobePath, onProgress))
+.then(() => {
+  fs.chmodSync(ffprobePath, 0o755) // make executable
+})
+.catch(exitOnError)
 
-  .then(() => downloadFile(readmeUrl, `${ffmpegPath}.README`))
-  .catch(warnWith('Failed to download the ffmpeg README.'))
+.then(() => downloadFile(readmeUrl, `${ffmpegPath}.README`))
+.catch(exitOnErrorOrWarnWith('Failed to download the ffmpeg README.'))
 
-  .then(() => downloadFile(licenseUrl, `${ffmpegPath}.LICENSE`))
-  .catch(warnWith('Failed to download the ffmpeg LICENSE.'))
+.then(() => downloadFile(licenseUrl, `${ffmpegPath}.LICENSE`))
+.catch(exitOnErrorOrWarnWith('Failed to download the ffmpeg LICENSE.'))
