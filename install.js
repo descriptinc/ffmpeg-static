@@ -163,7 +163,7 @@ const arch = process.env.npm_config_arch || os.arch()
 const platform = process.env.npm_config_platform || os.platform()
 
 const baseUrl = `https://github.com/eugeneware/ffmpeg-static/releases/download/${release}`
-const downloadUrl = `${baseUrl}/${platform}-${arch}.gz`
+const downloadUrl = `${baseUrl}/ffmpeg-${platform}-${arch}.gz`
 const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
 const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 
