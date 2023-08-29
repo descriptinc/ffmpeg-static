@@ -18,7 +18,7 @@ This module is installed via npm:
 $ npm install ffmpeg-static
 ```
 
-*Note:* During installation, it will download the appropriate `ffmpeg` binary from the [`b4.4` GitHub release](https://github.com/eugeneware/ffmpeg-static/releases/tag/b4.4). Use and distribution of the binary releases of FFmpeg are covered by their respective license.
+*Note:* During installation, it will download the appropriate `ffmpeg` binary from the [`b6.0` GitHub release](https://github.com/eugeneware/ffmpeg-static/releases/tag/b6.0). Use and distribution of the binary releases of FFmpeg are covered by their respective license.
 
 ### Electron & other cross-platform packaging tools
 
