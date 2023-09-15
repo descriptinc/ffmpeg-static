@@ -9,6 +9,8 @@ const FileCache = require('@derhuerst/http-basic/lib/FileCache').default
 const {extname} = require('path')
 var ProgressBar = require("progress");
 var request = require('@derhuerst/http-basic')
+const {createGunzip} = require('zlib')
+const {pipeline} = require('stream')
 var {ffmpegPath, ffprobePath} = require(".");
 var pkg = require("./package");
 
