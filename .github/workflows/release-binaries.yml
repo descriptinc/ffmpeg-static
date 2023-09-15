@@ -44,8 +44,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/darwin-x64
-          asset_name: darwin-x64
+          asset_path: bin/ffmpeg-darwin-x64
+          asset_name: ffmpeg-darwin-x64
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-darwin-x64
+          asset_name: ffprobe-darwin-x64
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
@@ -70,9 +79,28 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/darwin-arm64
-          asset_name: darwin-arm64
+          asset_path: bin/ffmpeg-linux-arm
+          asset_name: ffmpeg-linux-arm
           asset_content_type: application/octet-stream
+          
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffmpeg-darwin-arm
+          asset_name: ffmpeg-darwin-arm
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-darwin-arm
+          asset_name: ffprobe-darwin-arm
+          asset_content_type: application/octet-stream
+          
       - uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -96,33 +124,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/freebsd-x64
-          asset_name: freebsd-x64
+          asset_path: bin/ffprobe-linux-arm
+          asset_name: ffprobe-linux-arm
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/freebsd-x64.gz
-          asset_name: freebsd-x64.gz
-          asset_content_type: application/octet-stream
-
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/linux-arm
-          asset_name: linux-arm
-          asset_content_type: application/octet-stream
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/linux-arm.gz
-          asset_name: linux-arm.gz
+          asset_path: bin/ffmpeg-linux-arm.gz
+          asset_name: ffmpeg-linux-arm.gz
           asset_content_type: application/octet-stream
 
       - uses: actions/upload-release-asset@v1.0.1
@@ -148,8 +159,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/linux-arm64
-          asset_name: linux-arm64
+          asset_path: bin/ffmpeg-linux-arm64
+          asset_name: ffmpeg-linux-arm64
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-linux-arm64
+          asset_name: ffprobe-linux-arm64
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
@@ -183,8 +203,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/linux-ia32
-          asset_name: linux-ia32
+          asset_path: bin/ffmpeg-linux-ia32
+          asset_name: ffmpeg-linux-ia32
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-linux-ia32
+          asset_name: ffprobe-linux-ia32
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
@@ -218,8 +247,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/linux-x64
-          asset_name: linux-x64
+          asset_path: bin/ffmpeg-linux-x64
+          asset_name: ffmpeg-linux-x64
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-linux-x64
+          asset_name: ffprobe-linux-x64
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
@@ -253,8 +291,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/win32-ia32
-          asset_name: win32-ia32
+          asset_path: bin/ffmpeg-win32-ia32
+          asset_name: ffmpeg-win32-ia32
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-win32-ia32
+          asset_name: ffprobe-win32-ia32
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
@@ -279,8 +326,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: bin/win32-x64
-          asset_name: win32-x64
+          asset_path: bin/ffmpeg-win32-x64
+          asset_name: ffmpeg-win32-x64
+          asset_content_type: application/octet-stream
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: bin/ffprobe-win32-x64
+          asset_name: ffprobe-win32-x64
           asset_content_type: application/octet-stream
       - uses: actions/upload-release-asset@v1.0.1
         env:
