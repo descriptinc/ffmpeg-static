@@ -14,8 +14,7 @@
     "install": "node install.js",
     "test": "node test.js",
     "lint": "eslint .",
-    "prepublishOnly": "npm run lint && npm test",
-    "postinstall": "patch-package"
+    "prepublishOnly": "npm run lint && npm test"
   },
   "ffmpeg-static": {
     "binary-release-tag": "b6.0.0-rc.14",
@@ -53,7 +52,6 @@
     "@derhuerst/http-basic": "8.2.0",
     "env-paths": "^2.2.0",
     "https-proxy-agent": "^5.0.0",
-    "patch-package": "^6.2.2",
     "progress": "^2.0.3"
   },
   "devDependencies": {
