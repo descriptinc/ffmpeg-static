@@ -135,11 +135,13 @@ function downloadFile(url, destinationPath, progressCallback = noop) {
   return promise;
 }
 
-let progressBar = null;
-function onProgress(deltaBytes, totalBytes) {
+
+function newProgressListener(name) {
+  let progressBar = undefined
+  return function onProgress(deltaBytes, totalBytes) {
   if (totalBytes === null) return;
   if (!progressBar) {
-    progressBar = new ProgressBar(`Downloading ffmpeg ${releaseName} [:bar] :percent :etas `, {
+    progressBar = new ProgressBar(`Downloading ${name} ${releaseName} [:bar] :percent :etas `, {
       complete: "|",
       incomplete: " ",
       width: 20,
@@ -149,6 +151,11 @@ function onProgress(deltaBytes, totalBytes) {
 
   progressBar.tick(deltaBytes);
 }
+
+
+
+}
+
 
 const release = (
   process.env.FFMPEG_BINARY_RELEASE ||
@@ -169,20 +176,20 @@ const ffprobeUrl = `${baseUrl}/ffprobe-${platform}-${arch}`
 const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
 const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 
-downloadFile(ffmpegUrl, ffmpegPath, onProgress)
+downloadFile(ffmpegUrl, ffmpegPath,newProgressListener('ffmpeg'))
   .then(() => {
     fs.chmodSync(ffmpegPath, 0o755) // make executable
   })
   .catch(exitOnError)
 
-  .then(() => downloadFile(ffprobeUrl, ffprobePath, onProgress))
+  .then(() => downloadFile(ffprobeUrl, ffprobePath,newProgressListener('ffprobe'))
   .then(() => {
     fs.chmodSync(ffprobePath, 0o755) // make executable
   })
   .catch(exitOnError)
 
-  .then(() => downloadFile(readmeUrl, `${ffmpegPath}.README`))
+  .then(() => downloadFile(readmeUrl, `${ffmpegPath}.README`,newProgressListener('README')))
   .catch(warnWith('Failed to download the ffmpeg README.'))
 
-  .then(() => downloadFile(licenseUrl, `${ffmpegPath}.LICENSE`))
-  .catch(warnWith('Failed to download the ffmpeg LICENSE.'))
+  .then(() => downloadFile(licenseUrl, `${ffmpegPath}.LICENSE`,newProgressListener('LICENSE')))
+  .catch(warnWith('Failed to download the ffmpeg LICENSE.')))
