@@ -32,7 +32,7 @@ echo '  downloading from gyan.dev'
 download 'https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-6.1.1-essentials_build.7z' win32-x64.7z
 echo '  extracting'
 tmpdir=$(mktemp -d)
-7zr e -y -bd -o"$tmpdir" win32-x64.7z >/dev/null
+7z e -y -bd -o"$tmpdir" win32-x64.7z >/dev/null
 mv "$tmpdir/ffmpeg.exe" ../bin/ffmpeg-win32-x64
 mv "$tmpdir/ffprobe.exe" ../bin/ffprobe-win32-x64
 mv "$tmpdir/LICENSE" ../bin/win32-x64.LICENSE
