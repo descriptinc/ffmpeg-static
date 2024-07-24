@@ -107,8 +107,10 @@ mv ../bin/ffprobe ../bin/ffprobe-darwin-arm64
 curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/LICENSE.md'  -o ../bin/darwin-arm64.LICENSE
 curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/README.md'  -o ../bin/darwin-arm64.README
 
-
 echo 'freebsd x64'
 echo '  downloading from github.com/Thefrank/ffmpeg-static-freebsd'
 download 'https://github.com/Thefrank/ffmpeg-static-freebsd/releases/download/v6.1.0/ffmpeg' ../bin/freebsd-x64
 chmod +x ../bin/freebsd-x64
+
+chmod +x ../bin/ffmpeg*
+chmod +x ../bin/ffprobe*
