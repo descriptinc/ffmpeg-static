@@ -84,12 +84,12 @@ xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/GPLv3.t
 xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/readme.txt' >../bin/linux-arm64.README
 
 echo 'darwin x64'
-download 'https://www.osxexperts.net/ffmpeg511intel.zip' ffmpeg-darwin-x64.zip
+download 'https://www.osxexperts.net/FFmpeg511Intel.zip' ffmpeg-darwin-x64.zip
 echo '  extracting'
 unzip -o -d ../bin -j ffmpeg-darwin-x64.zip ffmpeg
 mv ../bin/ffmpeg ../bin/ffmpeg-darwin-x64
 
-download 'https://www.osxexperts.net/ffprobe511intel.zip' ffprobe-darwin-x64.zip
+download 'https://evermeet.cx/pub/ffprobe/ffprobe-5.1.2.zip' ffprobe-darwin-x64.zip
 echo '  extracting'
 unzip -o -d ../bin -j ffprobe-darwin-x64.zip ffprobe
 mv ../bin/ffprobe ../bin/ffprobe-darwin-x64
@@ -98,8 +98,8 @@ curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/LICENSE.md
 
 echo 'darwin arm64'
 echo '  downloading from osxexperts.net'
-download 'https://www.osxexperts.net/ffmpeg511arm.zip' ffmpeg-darwin-arm64.zip
-download 'https://www.osxexperts.net/ffprobe511arm.zip' ffprobe-darwin-arm64.zip
+download 'https://www.osxexperts.net/FFmpeg511ARM.zip' ffmpeg-darwin-arm64.zip
+download 'https://evermeet.cx/pub/ffprobe/ffprobe-5.1.2.zip' ffprobe-darwin-arm64.zip
 echo '  extracting'
 unzip -o -d ../bin -j ffmpeg-darwin-arm64.zip ffmpeg
 unzip -o -d ../bin -j ffprobe-darwin-arm64.zip ffprobe
