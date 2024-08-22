@@ -80,6 +80,7 @@ const isGzUrl = (url) => {
 }
 
 const noop = () => {}
+
 function downloadFile(url, destinationPath, progressCallback = noop) {
   let fulfill, reject;
   let totalBytes = 0;
@@ -135,19 +136,25 @@ function downloadFile(url, destinationPath, progressCallback = noop) {
   return promise;
 }
 
-let progressBar = null;
-function onProgress(deltaBytes, totalBytes) {
-  if (totalBytes === null) return;
-  if (!progressBar) {
-    progressBar = new ProgressBar(`Downloading ffmpeg ${releaseName} [:bar] :percent :etas `, {
-      complete: "|",
-      incomplete: " ",
-      width: 20,
-      total: totalBytes
-    });
-  }
 
-  progressBar.tick(deltaBytes);
+function getProgressIndicator(tool) {
+  let progressBar = null;
+  
+  return (deltaBytes,totalBytes) => {
+    if (progressBar == null) {
+      progressBar = new ProgressBar(`Downloading ${tool} ${releaseName} [:bar] :percent :etas `, {
+        complete: "|",
+        incomplete: " ",
+        width: 20,
+        total: totalBytes,
+      });
+
+    }
+    if(progressBar.total !== totalBytes) {
+      progressBar.total = totalBytes;
+    }
+    progressBar.tick(deltaBytes);
+  }
 }
 
 const release = (
@@ -169,13 +176,13 @@ const ffprobeUrl = `${baseUrl}/ffprobe-${platform}-${arch}`
 const readmeUrl = `${baseUrl}/${platform}-${arch}.README`
 const licenseUrl = `${baseUrl}/${platform}-${arch}.LICENSE`
 
-downloadFile(ffmpegUrl, ffmpegPath, onProgress)
+downloadFile(ffmpegUrl, ffmpegPath, getProgressIndicator('ffmpeg'))
   .then(() => {
     fs.chmodSync(ffmpegPath, 0o755) // make executable
   })
   .catch(exitOnError)
 
-  .then(() => downloadFile(ffprobeUrl, ffprobePath, onProgress))
+  .then(() => downloadFile(ffprobeUrl, ffprobePath, getProgressIndicator('ffprobe')))
   .then(() => {
     fs.chmodSync(ffprobePath, 0o755) // make executable
   })
