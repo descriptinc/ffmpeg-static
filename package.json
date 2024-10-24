@@ -1,6 +1,6 @@
 {
   "name": "ffmpeg-ffprobe-static",
-  "version": "5.1.0-rc.1",
+  "version": "7.1.0-rc.1",
   "description": "ffmpeg and ffprobe static binaries for Mac OSX, Linux, and Windows",
   "main": "index.js",
   "types": "index.d.ts",
@@ -17,8 +17,8 @@
     "prepublishOnly": "npm run lint && npm test"
   },
   "ffmpeg-static": {
-    "binary-release-tag": "b5.1.0-rc.1",
-    "binary-release-name": "5.1.0.rc.1"
+    "binary-release-tag": "b7.1.0-rc.1",
+    "binary-release-name": "7.1.0.rc.1"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   },
   "keywords": [
     "ffmpeg",
+    "ffprobe",
     "static",
     "library",
     "binary",
