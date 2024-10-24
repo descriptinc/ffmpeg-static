@@ -18,7 +18,7 @@
   },
   "ffmpeg-static": {
     "binary-release-tag": "b7.1.0-rc.1",
-    "binary-release-name": "7.1.0.rc.1"
+    "binary-release-name": "7.1.0-rc.1"
   },
   "repository": {
     "type": "git",
