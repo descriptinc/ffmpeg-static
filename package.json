@@ -1,6 +1,6 @@
 {
   "name": "ffmpeg-ffprobe-static",
-  "version": "7.1.0-rc.1",
+  "version": "6.1.2-rc.1",
   "description": "ffmpeg and ffprobe static binaries for Mac OSX, Linux, and Windows",
   "main": "index.js",
   "types": "index.d.ts",
