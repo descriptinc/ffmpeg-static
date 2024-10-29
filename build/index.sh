@@ -33,11 +33,12 @@ echo '  downloading from gyan.dev'
 download 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-10-23-13-03/ffmpeg-n6.1.2-9-g4571c80b40-win64-gpl-6.1.zip' win32-x64.zip
 echo '  extracting'
 tmpdir=$(mktemp -d)
-7zr e -y -bd -o"$tmpdir" win32-x64.7z >/dev/null
+unzip -o -d $tmpdir -j win32-x64.zip '*/bin/ffmpeg.exe' '*/bin/ffprobe.exe'
+ls -lr ../bin
 mv "$tmpdir/ffmpeg.exe" ../bin/ffmpeg-win32-x64
 mv "$tmpdir/ffprobe.exe" ../bin/ffprobe-win32-x64
-mv "$tmpdir/LICENSE" ../bin/win32-x64.LICENSE
-mv "$tmpdir/README.txt" ../bin/win32-x64.README
+curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/LICENSE.md'  -o ../bin/win32-x64.LICENSE
+curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/README.md'  -o ../bin/win32-x64.README
 
 echo 'windows ia32'
 echo '  downloading from github.com'
@@ -63,7 +64,7 @@ xzcat linux-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 2 --wildcar
 mv ../bin/ffmpeg ../bin/ffmpeg-linux-arm64
 mv ../bin/ffprobe ../bin/ffprobe-linux-arm64
 xzcat linux-arm64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/LICENSE.txt' >../bin/linux-arm64.LICENSE
-curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/README.md'  -o ../bin/linux-x64.README
+curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/README.md'  -o ../bin/linux-arm64.README
 
 echo 'darwin x64'
 download 'https://www.osxexperts.net/ffmpeg71intel.zip' ffmpeg-darwin-x64.zip
