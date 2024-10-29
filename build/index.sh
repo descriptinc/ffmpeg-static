@@ -30,7 +30,7 @@ download () {
 ##Special case download from archive.org for one-time download
 echo 'windows x64'
 echo '  downloading from gyan.dev'
-download 'https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z' win32-x64.7z
+download 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-10-23-13-03/ffmpeg-n6.1.2-9-g4571c80b40-win64-gpl-6.1.zip' win32-x64.zip
 echo '  extracting'
 tmpdir=$(mktemp -d)
 7zr e -y -bd -o"$tmpdir" win32-x64.7z >/dev/null
@@ -48,7 +48,7 @@ mv ../bin/ffmpeg.exe ../bin/ffmpeg-win32-ia32
 mv ../bin/ffprobe.exe ../bin/ffprobe-win32-ia32
 
 echo 'linux x64'
-download 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-10-23-13-03/ffmpeg-n7.1-15-g9fbbd924f2-linux64-gpl-7.1.tar.xz' linux-x64.tar.xz
+download 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-10-23-13-03/ffmpeg-n6.1.2-9-g4571c80b40-linux64-gpl-6.1.tar.xz' linux-x64.tar.xz
 echo '  extracting'
 xzcat linux-x64.tar.xz | $tar_exec -x -C ../bin --strip-components 2 --wildcards '*/ffmpeg' '*/ffprobe'
 mv ../bin/ffmpeg ../bin/ffmpeg-linux-x64
@@ -57,7 +57,7 @@ xzcat linux-x64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/LICENSE.t
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/README.md'  -o ../bin/linux-x64.README
 
 echo 'linux arm64'
-download 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-10-23-13-03/ffmpeg-n7.1-15-g9fbbd924f2-linuxarm64-gpl-7.1.tar.xz' linux-arm64.tar.xz
+download 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-10-23-13-03/ffmpeg-n6.1.2-9-g4571c80b40-linuxarm64-gpl-6.1.tar.xz' linux-arm64.tar.xz
 echo '  extracting'
 xzcat linux-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 2 --wildcards '*/ffmpeg' '*/ffprobe'
 mv ../bin/ffmpeg ../bin/ffmpeg-linux-arm64
@@ -80,8 +80,8 @@ curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/LICENSE.md
 
 echo 'darwin arm64'
 echo '  downloading from osxexperts.net'
-download 'https://www.osxexperts.net/ffmpeg71arm.zip' ffmpeg-darwin-arm64.zip
-download 'https://www.osxexperts.net/ffprobe71arm.zip' ffprobe-darwin-arm64.zip
+download 'https://www.osxexperts.net/ffmpeg611arm.zip' ffmpeg-darwin-arm64.zip
+download 'https://www.osxexperts.net/ffprobe611arm.zip' ffprobe-darwin-arm64.zip
 echo '  extracting'
 unzip -o -d ../bin -j ffmpeg-darwin-arm64.zip ffmpeg
 unzip -o -d ../bin -j ffprobe-darwin-arm64.zip ffprobe
@@ -93,5 +93,5 @@ curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/README.md'
 
 echo 'freebsd x64'
 echo '  downloading from github.com/Thefrank/ffmpeg-static-freebsd'
-download 'https://github.com/Thefrank/ffmpeg-static-freebsd/releases/download/v7.0.0/ffmpeg' ../bin/freebsd-x64
+download 'https://github.com/Thefrank/ffmpeg-static-freebsd/releases/download/v6.1.0/ffmpeg' ../bin/freebsd-x64
 chmod +x ../bin/freebsd-x64
