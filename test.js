@@ -1,6 +1,6 @@
 'use strict'
 
-const {ok, strictEqual} = require('assert')
+const {notStrictEqual,ok, strictEqual} = require('assert')
 const {isAbsolute} = require('path')
 const fs = require('fs')
 const {spawnSync} = require('child_process')
@@ -25,14 +25,18 @@ console.info(`ok 5 - ${ffmpegPath} is executable`)
 fs.accessSync(ffprobePath, fs.constants.X_OK)
 console.info(`ok 6 - ${ffprobePath} is executable`)
 
-const spawnFfmpeg = spawnSync(ffmpegPath, ['--help'], {
-	stdio: ['ignore', 'ignore', 'pipe'], // stdin, stdout, stderr
+const spawnFfmpeg = spawnSync(ffmpegPath, ['-h','full'], {
+	stdio: ['ignore', 'pipe', 'pipe'], // stdin, stdout, stderr
 })
 strictEqual(spawnFfmpeg.status, 0)
+
 console.info(`ok 7 - \`${ffmpegPath} --help\` works`)
+notStrictEqual(spawnFfmpeg.output.toString().indexOf('-force_cfr'), -1)
+console.info(`ok 8 - \`${ffmpegPath}\` contains the custom cli options`)
+
 
 const spawnFfprobe = spawnSync(ffprobePath, ['--help'], {
 	stdio: ['ignore', 'ignore', 'pipe'], // stdin, stdout, stderr
 })
 strictEqual(spawnFfprobe.status, 0)
-console.info(`ok 8 - \`${ffprobePath} --help\` works`)
+console.info(`ok 9 - \`${ffprobePath} --help\` works`)

@@ -139,7 +139,7 @@ function downloadFile(url, destinationPath, progressCallback = noop) {
 
 function getProgressIndicator(tool) {
   let progressBar = null;
-  
+
   return (deltaBytes,totalBytes) => {
     if (progressBar == null) {
       progressBar = new ProgressBar(`Downloading ${tool} ${releaseName} [:bar] :percent :etas `, {
@@ -168,7 +168,7 @@ const releaseName = (
 const arch = process.env.npm_config_arch || os.arch()
 const platform = process.env.npm_config_platform || os.platform()
 
-const base = process.env.FFMPEG_FFPROBE_STATIC_BASE_URL || 'https://github.com/descriptinc/ffmpeg-ffprobe-static/releases/download/';
+const base = 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/';
 console.log(`[ffmpeg-ffprobe-static] Using base url: ${base}`);
 const baseUrl = new URL(release, base).href;
 const ffmpegUrl = `${baseUrl}/ffmpeg-${platform}-${arch}`
