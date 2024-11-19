@@ -127,9 +127,11 @@ function downloadFile(url, destinationPath, progressCallback = noop) {
     if (!response.fromCache && progressCallback) {
       const cLength = response.headers["content-length"]
       totalBytes = cLength ? parseInt(cLength, 10) : null
-      response.body.on('data', (chunk) => {
-        progressCallback(chunk.length, totalBytes);
-      });
+      if (totalBytes) {
+        response.body.on('data', (chunk) => {
+          progressCallback(chunk.length, totalBytes);
+        });
+      }
     }
   });
 
