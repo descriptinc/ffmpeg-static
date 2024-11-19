@@ -1,6 +1,6 @@
 {
   "name": "@descript/ffmpeg-ffprobe-static",
-  "version": "6.1.2-rc.1",
+  "version": "6.1.2-rc.2",
   "description": "Non-free versions of ffmpeg and ffprobe static binaries for Mac OSX, Linux, and Windows for server-side use only",
   "main": "index.js",
   "types": "index.d.ts",
