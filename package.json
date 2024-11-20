@@ -1,6 +1,6 @@
 {
   "name": "@descript/ffmpeg-ffprobe-static",
-  "version": "6.1.2-rc.2",
+  "version": "6.1.2-rc.3",
   "description": "Non-free versions of ffmpeg and ffprobe static binaries for Mac OSX, Linux, and Windows for server-side use only",
   "main": "index.js",
   "types": "index.d.ts",
@@ -17,8 +17,8 @@
     "prepublishOnly": "npm run lint && npm test"
   },
   "ffmpeg-static": {
-    "binary-release-tag": "b6.1.2-rc.1",
-    "binary-release-name": "6.1.2-rc.1"
+    "binary-release-tag": "b6.1.2-rc.3",
+    "binary-release-name": "6.1.2-rc.3"
   },
   "repository": {
     "type": "git",
