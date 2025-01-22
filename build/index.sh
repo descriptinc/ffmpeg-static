@@ -30,7 +30,7 @@ download () {
 ##Special case download from archive.org for one-time download
 echo 'windows x64'
 echo '  downloading from gyan.dev'
-download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-n7.1-151-g5b2ee11a60-win64-nonfree-7.1.zip' win32-x64.zip
+download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-n7.1-155-g0529b466fa-win64-nonfree-7.1.zip' win32-x64.zip
 echo '  extracting'
 tmpdir=$(mktemp -d)
 unzip -o -d $tmpdir -j win32-x64.zip '*/bin/ffmpeg.exe' '*/bin/ffprobe.exe'
@@ -41,7 +41,7 @@ curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/LICENSE.md
 curl -fsSL 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/n6.1:/README.md'  -o ../bin/win32-x64.README
 
 echo 'linux x64'
-download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-n7.1-151-g5b2ee11a60-linux64-nonfree-7.1.tar.xz' linux-x64.tar.xz
+download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-n7.1-155-g0529b466fa-linux64-nonfree-7.1.tar.xz' linux-x64.tar.xz
 echo '  extracting'
 xzcat linux-x64.tar.xz | $tar_exec -x -C ../bin --strip-components 2 --wildcards '*/ffmpeg' '*/ffprobe'
 mv ../bin/ffmpeg ../bin/ffmpeg-linux-x64
@@ -50,7 +50,7 @@ xzcat linux-x64.tar.xz | $tar_exec -x --ignore-case --wildcards -O '**/LICENSE.t
 curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/README.md'  -o ../bin/linux-x64.README
 
 echo 'linux arm64'
-download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-n7.1-152-gd72536008a-linuxarm64-nonfree-7.1.tar.xz' linux-arm64.tar.xz
+download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-n7.1-155-g0529b466fa-linuxarm64-nonfree-7.1.tar.xz' linux-arm64.tar.xz
 echo '  extracting'
 xzcat linux-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 2 --wildcards '*/ffmpeg' '*/ffprobe'
 mv ../bin/ffmpeg ../bin/ffmpeg-linux-arm64
@@ -71,7 +71,7 @@ curl -s -L 'https://git.ffmpeg.org/gitweb/ffmpeg.git/blob_plain/HEAD:/LICENSE.md
 
 echo 'darwin arm64'
 echo '  downloading from osxexperts.net'
-download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-7.1-darwin-arm64-nonfree.tar.xz' darwin-arm64.zip
+download 'https://descript-public.s3.amazonaws.com/descript-builds/ffmpeg-static/ffmpeg-7.1.2-darwin-arm64-nonfree.tar.gz' darwin-arm64.zip
 echo '  extracting'
 xzcat darwin-arm64.tar.xz | $tar_exec -x -C ../bin --strip-components 2 --wildcards '*/ffmpeg' '*/ffprobe'
 mv ../bin/ffmpeg ../bin/ffmpeg-darwin-arm64
